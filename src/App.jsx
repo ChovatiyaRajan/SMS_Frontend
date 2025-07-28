@@ -1,10 +1,19 @@
 import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router'
+import Register from './Components/Register'
+import Login from './Components/Login'
+import { MantineProvider } from '@mantine/core'
 
 const App = () => {
   return (
-    <div>
-      Hello !
-    </div>  
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/register' element={<Register />}></Route>
+        <Route path='/' element={<Login />}></Route>
+      </Routes>
+    </BrowserRouter>  
+    </MantineProvider>
   )
 }
 
