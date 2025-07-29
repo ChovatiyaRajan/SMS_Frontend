@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import Register from './Components/Register'
-import Login from './Components/Login'
+import Login from './pages/Login'
 import { MantineProvider } from '@mantine/core'
 import Dashbored from './Components/Dashbored'
 
