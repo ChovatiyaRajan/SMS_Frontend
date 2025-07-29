@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { LoginUser } from "../api/api.js";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (!email || !password) return alert("All fields are required!");
@@ -16,9 +18,12 @@ const LoginForm = () => {
 
       const response = await LoginUser(payload);
 
-      const data = await response.json();
+      const token = response.data.token;
 
-      if (!response.ok) throw new Error(data.message);
+      localStorage.setItem("token", token);
+      
+      navigate("/dashboard");
+
     } catch (error) {
       console.log(error.message);
       alert(error.message);
