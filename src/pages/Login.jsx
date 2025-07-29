@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { LoginUser } from "../api/api.js";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext.jsx";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const { auth, dispatch } = useContext(AuthContext);
 
   const handleLogin = async () => {
     if (!email || !password) return alert("All fields are required!");
@@ -22,6 +25,7 @@ const LoginForm = () => {
 
       localStorage.setItem("token", token);
 
+      dispatch({ type: "LOGIN", payload: response.data.user });
       navigate("/dashboard");
     } catch (error) {
       console.log(error.message);
@@ -63,7 +67,12 @@ const LoginForm = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+          disabled={!email || !password}
+          className={`w-full text-white py-2 rounded-md transition ${
+            !email || !password
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
+          }`}
           onClick={handleLogin}
         >
           Login

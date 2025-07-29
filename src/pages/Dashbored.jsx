@@ -1,32 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getUser } from "../api/api";
 import { useNavigate } from "react-router";
 import AppLayout from "../layout/AppLayout";
+import { AuthContext } from "../context/AuthContext";
 
 const Dashbored = () => {
-  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  const getUserData = async () => {
-    try {
-      const response = await getUser();
-
-      const data = response.data;
-
-      setUser(data.user);
-    } catch (error) {
-      console.log(error.message);
-      localStorage.removeItem("token");
-      navigate("/");
-    }
-  };
+  const { auth } = useContext(AuthContext);
+  const user = auth.user;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
     if (!token) return navigate("/");
-
-    getUserData();
   }, []);
 
   if (!user) return <p className="text-center mt-10">Loading...</p>;

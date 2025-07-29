@@ -1,8 +1,10 @@
+import Header from "../Components/Header";
+
 const AppLayout = ({ children }) => {
   return (
     <>
-      <div>Header</div>
-        {children}
+      <Header />
+      {children}
       <div>Footer</div>
     </>
   );
