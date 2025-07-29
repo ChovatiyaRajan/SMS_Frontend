@@ -21,9 +21,8 @@ const LoginForm = () => {
       const token = response.data.token;
 
       localStorage.setItem("token", token);
-      
-      navigate("/dashboard");
 
+      navigate("/dashboard");
     } catch (error) {
       console.log(error.message);
       alert(error.message);
@@ -34,7 +33,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
@@ -70,6 +69,15 @@ const LoginForm = () => {
           Login
         </button>
       </div>
+      <p className="mt-4 text-center text-sm text-gray-600">
+        Don’t have an account?{" "}
+        <span
+          onClick={() => navigate("/register")}
+          className="text-blue-600 hover:underline cursor-pointer"
+        >
+          Register
+        </span>
+      </p>
     </div>
   );
 };

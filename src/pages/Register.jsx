@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { RegisterUser } from "../api/api";
+import { useNavigate } from "react-router";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -8,6 +9,7 @@ const RegisterForm = () => {
   const [dob, setDob] = useState("");
   const [password, setPassword] = useState("");
   const [conPassword, setConPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     if (password !== conPassword) return alert("password is not match !");
@@ -35,8 +37,8 @@ const RegisterForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 ">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md ">
         <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
 
         <div className="mb-4">
@@ -122,6 +124,15 @@ const RegisterForm = () => {
           Register
         </button>
       </div>
+      <p className="mt-4 text-center text-sm text-gray-600 mb-10">
+        Already have an account?{" "}
+        <span
+          onClick={() => navigate("/")}
+          className="text-blue-600 hover:underline cursor-pointer"
+        >
+          Sign In
+        </span>
+      </p>
     </div>
   );
 };
