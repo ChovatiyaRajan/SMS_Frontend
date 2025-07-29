@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer, useState } from "react";
 import { getUser } from "../api/api";
 
 export const AuthContext = createContext();
@@ -17,6 +17,7 @@ const reducer = (state, action) => {
 };
 
 export const AuthProvider = ({ children }) => {
+  const [loading, setLoading] = useState(true);
   const [auth, dispatch] = useReducer(reducer, {
     user: null,
     isLoggedIn: false,
@@ -24,11 +25,14 @@ export const AuthProvider = ({ children }) => {
 
   const getUserData = async () => {
     try {
+      setLoading(true);
       const response = await getUser();
       dispatch({ type: "SET_USER", payload: response.data.user });
     } catch (error) {
       localStorage.removeItem("token");
       window.location.href = "/";
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -37,11 +41,13 @@ export const AuthProvider = ({ children }) => {
 
     if (token) {
       getUserData();
+    } else {
+      setLoading(false);
     }
   }, [auth?.isLoggedIn]);
 
   return (
-    <AuthContext.Provider value={{ auth, dispatch }}>
+    <AuthContext.Provider value={{ auth, dispatch, loading }}>
       {children}
     </AuthContext.Provider>
   );

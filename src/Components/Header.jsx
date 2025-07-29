@@ -1,8 +1,11 @@
-import { useNavigate } from "react-router";
+import { useContext } from "react";
+import { NavLink, useNavigate } from "react-router";
+import { AuthContext } from "../context/AuthContext";
 
 const Header = () => {
   const navigate = useNavigate();
 
+  const { auth } = useContext(AuthContext);
   const handleLogout = () => {
     const confirmLogout = window.confirm(
       "You have been logged out successfully!"
@@ -27,12 +30,23 @@ const Header = () => {
             MyApp
           </h1>
 
-          <button
-            onClick={handleLogout}
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition"
-          >
-            Logout
-          </button>
+          <div>
+            {auth?.user?.role === "ADMIN" && (
+              <NavLink
+                to={"/users-data"}
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition mr-10"
+              >
+                Users Data
+              </NavLink>
+            )}
+
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </>
