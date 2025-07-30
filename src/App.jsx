@@ -2,11 +2,11 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login";
 import { MantineProvider } from "@mantine/core";
-import Dashbored from "./pages/Dashbored.jsx";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import AuthRoutes from "./Protected Route/AuthRoutes.jsx";
-import UsersData from "./pages/UsersData.jsx";
 import ProtectedRoutes from "./Protected Route/ProtectedRoutes.jsx";
+import "@mantine/core/styles.css";
+import AdminPanel from "./pages/AdminPanel.jsx";
 
 const App = () => {
   return (
@@ -26,7 +26,7 @@ const App = () => {
                 />
               }
             >
-              <Route path="/dashboard" element={<Dashbored />}></Route>
+              <Route path="/dashboard" element={<AdminPanel />}></Route>
             </Route>
 
             <Route
@@ -34,7 +34,7 @@ const App = () => {
                 <ProtectedRoutes allowedRoles={["ADMIN", "SUPER_ADMIN"]} />
               }
             >
-              <Route path="/users-data" element={<UsersData />}></Route>
+              <Route path="/users-data" element={<AdminPanel />}></Route>
             </Route>
           </Routes>
         </BrowserRouter>
