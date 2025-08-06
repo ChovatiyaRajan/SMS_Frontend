@@ -10,3 +10,5 @@ export const getUser = () => API.get("/students/get-user");
 export const getUsers = () => API.get("/students/get-users");
 
 export const deleteUser = (id) => API.delete(`/students/del-user/${id}`);
+
+export const updateUser = (id , updatedData) => API.put(`/students/update-user/${id}` , updatedData);

@@ -1,29 +1,54 @@
 import { useEffect, useState } from "react";
-import { deleteUser, getUsers } from "../api/api";
-import { Button, Table } from "@mantine/core";
+import { Button, Table, Modal, TextInput, Select, Group } from "@mantine/core";
+import { getUsers, deleteUser, updateUser } from "../api/api"; // You need to have updateUser API
 import SideBarLayout from "../layout/SideBarLayout";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
+  const [opened, setOpened] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [role, setRole] = useState("");
 
   const getUsersData = async () => {
     const response = await getUsers();
-
     setUsers(response.data.allUsers);
   };
 
-
   const handleDelete = async (id) => {
-
-    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
-
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this user?"
+    );
     if (confirmDelete) {
       await deleteUser(id);
       getUsersData();
-    } else {
-      return;
     }
-  }
+  };
+
+  const handleEditClick = (user) => {
+    setSelectedUser(user);
+    setName(user.name);
+    setEmail(user.email);
+    setGender(user.gender);
+    setRole(user.role);
+    setOpened(true);
+    console.log(user.gender);
+  };
+
+  const handleUpdateSubmit = async () => {
+    const updatedData = {
+      name,
+      email,
+      gender,
+      role,
+    };
+    await updateUser(selectedUser._id, updatedData);
+    setOpened(false);
+    getUsersData();
+  };
 
   useEffect(() => {
     getUsersData();
@@ -46,10 +71,22 @@ const Users = () => {
       </Table.Td>
       <Table.Td>
         <div className="flex gap-x-2">
-          <Button variant="filled" color="red" size="md" radius="md" onClick={() => handleDelete(element._id)}>
+          <Button
+            variant="filled"
+            color="red"
+            size="md"
+            radius="md"
+            onClick={() => handleDelete(element._id)}
+          >
             Delete
           </Button>
-          <Button variant="filled" color="indigo" size="md" radius="md">
+          <Button
+            variant="filled"
+            color="indigo"
+            size="md"
+            radius="md"
+            onClick={() => handleEditClick(element)}
+          >
             Edit
           </Button>
         </div>
@@ -83,6 +120,47 @@ const Users = () => {
           </Table>
         </div>
       </div>
+
+      {/* Edit Modal */}
+      <Modal
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title="Edit User"
+        centered
+      >
+        <TextInput
+          label="Name"
+          value={name}
+          onChange={(e) => setName(e.currentTarget.value)}
+          withAsterisk
+        />
+        <TextInput
+          label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.currentTarget.value)}
+          withAsterisk
+          mt="md"
+        />
+        <Select
+          label="Gender"
+          value={gender}
+          onChange={setGender}
+          data={["male", "female"]}
+          withAsterisk
+          mt="md"
+        />
+        <Select
+          label="Role"
+          value={role}
+          onChange={setRole}
+          data={["ADMIN", "USER"]}
+          withAsterisk
+          mt="md"
+        />
+        <Group mt="xl" position="right">
+          <Button onClick={handleUpdateSubmit}>Update</Button>
+        </Group>
+      </Modal>
     </SideBarLayout>
   );
 };
