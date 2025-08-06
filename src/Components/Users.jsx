@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Table, Modal, TextInput, Select, Group } from "@mantine/core";
 import { getUsers, deleteUser, updateUser } from "../api/api"; // You need to have updateUser API
 import SideBarLayout from "../layout/SideBarLayout";
+import { AuthContext } from "../context/AuthContext";
 
 const Users = () => {
+  const { auth } = useContext(AuthContext);
+
+  console.log();
+
   const [users, setUsers] = useState([]);
   const [opened, setOpened] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -69,28 +74,30 @@ const Users = () => {
           return `${day} ${month}, ${year}`;
         })()}
       </Table.Td>
-      <Table.Td>
-        <div className="flex gap-x-2">
-          <Button
-            variant="filled"
-            color="red"
-            size="md"
-            radius="md"
-            onClick={() => handleDelete(element._id)}
-          >
-            Delete
-          </Button>
-          <Button
-            variant="filled"
-            color="indigo"
-            size="md"
-            radius="md"
-            onClick={() => handleEditClick(element)}
-          >
-            Edit
-          </Button>
-        </div>
-      </Table.Td>
+      {auth.user.role === "SUPER_ADMIN" && element._id !== auth.user._id && (
+        <Table.Td>
+          <div className="flex gap-x-2">
+            <Button
+              variant="filled"
+              color="red"
+              size="md"
+              radius="md"
+              onClick={() => handleDelete(element._id)}
+            >
+              Delete
+            </Button>
+            <Button
+              variant="filled"
+              color="indigo"
+              size="md"
+              radius="md"
+              onClick={() => handleEditClick(element)}
+            >
+              Edit
+            </Button>
+          </div>
+        </Table.Td>
+      )}
     </Table.Tr>
   ));
 
@@ -113,7 +120,9 @@ const Users = () => {
                 <Table.Th>User Email</Table.Th>
                 <Table.Th>User gender</Table.Th>
                 <Table.Th>User DOB</Table.Th>
-                <Table.Th>Action</Table.Th>
+                {auth.user.role === "SUPER_ADMIN" && (
+                  <Table.Th>Actions</Table.Th>
+                )}
               </Table.Tr>
             </Table.Thead>
             <Table.Tbody>{rows}</Table.Tbody>

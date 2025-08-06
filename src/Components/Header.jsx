@@ -6,6 +6,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const { auth } = useContext(AuthContext);
+
   const handleLogout = () => {
     const confirmLogout = window.confirm(
       "You have been logged out successfully!"
@@ -19,9 +20,11 @@ const Header = () => {
     }
   };
 
+  const allowedRoles = ["ADMIN", "SUPER_ADMIN"];
+
   return (
     <>
-      <div className="bg-blue-600 text-white shadow-md fixed top-0 left-0 w-full z-50">
+      <div className="bg-gray-800 text-white shadow-md fixed top-0 left-0 w-full z-50">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <h1
             className="text-xl font-bold cursor-pointer"
@@ -31,7 +34,7 @@ const Header = () => {
           </h1>
 
           <div>
-            {auth?.user?.role === "ADMIN" && (
+            {allowedRoles.includes(auth?.user?.role) && (
               <NavLink
                 to={"/admin/users-data"}
                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition mr-10"
