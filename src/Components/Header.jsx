@@ -33,10 +33,10 @@ const Header = () => {
           <div>
             {auth?.user?.role === "ADMIN" && (
               <NavLink
-                to={"/users-data"}
+                to={"/admin/users-data"}
                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition mr-10"
               >
-                Users Data
+                Admin Panel
               </NavLink>
             )}
 

@@ -1,0 +1,90 @@
+import { useEffect, useState } from "react";
+import { deleteUser, getUsers } from "../api/api";
+import { Button, Table } from "@mantine/core";
+import SideBarLayout from "../layout/SideBarLayout";
+
+const Users = () => {
+  const [users, setUsers] = useState([]);
+
+  const getUsersData = async () => {
+    const response = await getUsers();
+
+    setUsers(response.data.allUsers);
+  };
+
+
+  const handleDelete = async (id) => {
+
+    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+
+    if (confirmDelete) {
+      await deleteUser(id);
+      getUsersData();
+    } else {
+      return;
+    }
+  }
+
+  useEffect(() => {
+    getUsersData();
+  }, []);
+
+  const rows = users.map((element) => (
+    <Table.Tr key={element._id}>
+      <Table.Td>{element.role}</Table.Td>
+      <Table.Td>{element.name}</Table.Td>
+      <Table.Td>{element.email}</Table.Td>
+      <Table.Td>{element.gender}</Table.Td>
+      <Table.Td>
+        {(() => {
+          const date = new Date(element.DOB);
+          const day = date.getDate();
+          const month = date.toLocaleString("en-US", { month: "long" });
+          const year = date.getFullYear();
+          return `${day} ${month}, ${year}`;
+        })()}
+      </Table.Td>
+      <Table.Td>
+        <div className="flex gap-x-2">
+          <Button variant="filled" color="red" size="md" radius="md" onClick={() => handleDelete(element._id)}>
+            Delete
+          </Button>
+          <Button variant="filled" color="indigo" size="md" radius="md">
+            Edit
+          </Button>
+        </div>
+      </Table.Td>
+    </Table.Tr>
+  ));
+
+  return (
+    <SideBarLayout>
+      <div className=" bg-gray-800 text-white py-3 px-3">All User Data</div>
+      <div className="flex justify-center">
+        <div className="max-h-120 w-full overflow-y-scroll mt-10">
+          <Table
+            striped
+            highlightOnHover
+            withTableBorder
+            withColumnBorders
+            className="w-full"
+          >
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th>User Role</Table.Th>
+                <Table.Th>User name</Table.Th>
+                <Table.Th>User Email</Table.Th>
+                <Table.Th>User gender</Table.Th>
+                <Table.Th>User DOB</Table.Th>
+                <Table.Th>Action</Table.Th>
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>{rows}</Table.Tbody>
+          </Table>
+        </div>
+      </div>
+    </SideBarLayout>
+  );
+};
+
+export default Users;

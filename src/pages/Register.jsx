@@ -25,7 +25,7 @@ const RegisterForm = () => {
     try {
       await RegisterUser(newUser);
     } catch (error) {
-      return console.log(error);
+      return console.log(error.message);
     }
 
     setName("");

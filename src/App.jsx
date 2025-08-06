@@ -6,7 +6,8 @@ import { AuthProvider } from "./context/AuthContext.jsx";
 import AuthRoutes from "./Protected Route/AuthRoutes.jsx";
 import ProtectedRoutes from "./Protected Route/ProtectedRoutes.jsx";
 import "@mantine/core/styles.css";
-import AdminPanel from "./pages/AdminPanel.jsx";
+import Dashbored from "./pages/Dashbored.jsx";
+import Users from "./Components/Users.jsx";
 
 const App = () => {
   return (
@@ -26,7 +27,7 @@ const App = () => {
                 />
               }
             >
-              <Route path="/dashboard" element={<AdminPanel />}></Route>
+              <Route path="/dashboard" element={<Dashbored />}></Route>
             </Route>
 
             <Route
@@ -34,7 +35,9 @@ const App = () => {
                 <ProtectedRoutes allowedRoles={["ADMIN", "SUPER_ADMIN"]} />
               }
             >
-              <Route path="/users-data" element={<AdminPanel />}></Route>
+              <Route path="/admin">
+                <Route path="users-data" element={<Users />}></Route>
+              </Route>
             </Route>
           </Routes>
         </BrowserRouter>

@@ -8,3 +8,5 @@ export const RegisterUser = (payload) =>
 export const getUser = () => API.get("/students/get-user");
 
 export const getUsers = () => API.get("/students/get-users");
+
+export const deleteUser = (id) => API.delete(`/students/del-user/${id}`);
