@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { RegisterUser } from "../api/api";
 import { useNavigate } from "react-router";
 
@@ -11,7 +11,15 @@ const RegisterForm = () => {
   const [conPassword, setConPassword] = useState("");
   const navigate = useNavigate();
 
+  const isBtnDisabled = useMemo(() => {
+    return (
+      !name || !email || !password || !conPassword || password !== conPassword
+    );
+  }, [name, email, password, conPassword]);
+  console.log(isBtnDisabled);
+
   const handleSubmit = async () => {
+    console.log("first");
     if (password !== conPassword) return alert("password is not match !");
 
     const newUser = {
@@ -118,7 +126,12 @@ const RegisterForm = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+          className={`w-full  text-white py-2 rounded-md  transition ${
+            isBtnDisabled
+              ? "bg-gray-400 hover:bg-gray-700 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
+          } bg-blue-600 hover:bg-blue-700`}
+          disabled={isBtnDisabled}
           onClick={handleSubmit}
         >
           Register

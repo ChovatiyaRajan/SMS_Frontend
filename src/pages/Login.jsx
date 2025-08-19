@@ -70,7 +70,7 @@ const LoginForm = () => {
           disabled={!email || !password}
           className={`w-full text-white py-2 rounded-md transition ${
             !email || !password
-              ? "bg-gray-400 cursor-not-allowed"
+              ? "bg-gray-400 hover:bg-gray-700 cursor-not-allowed"
               : "bg-blue-600 hover:bg-blue-700"
           }`}
           onClick={handleLogin}

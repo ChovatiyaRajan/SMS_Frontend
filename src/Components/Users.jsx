@@ -7,19 +7,21 @@ import { AuthContext } from "../context/AuthContext";
 const Users = () => {
   const { auth } = useContext(AuthContext);
 
-  console.log();
-
   const [users, setUsers] = useState([]);
   const [opened, setOpened] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [role, setRole] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
 
   const getUsersData = async () => {
-    const response = await getUsers();
+    const queryParms = new URLSearchParams();
+    
+    if (selectedRole) queryParms.append("selectedRole", selectedRole);
+
+    const response = await getUsers(queryParms);
     setUsers(response.data.allUsers);
   };
 
@@ -57,7 +59,7 @@ const Users = () => {
 
   useEffect(() => {
     getUsersData();
-  }, []);
+  }, [selectedRole]);
 
   const rows = users.map((element) => (
     <Table.Tr key={element._id}>
@@ -104,7 +106,16 @@ const Users = () => {
   return (
     <SideBarLayout>
       <div className=" bg-gray-800 text-white py-3 px-3">All User Data</div>
-      <div className="flex justify-center">
+      <div className="flex flex-col justify-center  ">
+        <Select
+          className="w-1/3 mt-5"
+          label="Select User Role"
+          placeholder="Pick value"
+          data={["USER", "ADMIN", "SUPER_ADMIN"]}
+          onChange={(e) => setSelectedRole(e)}
+          defaultValue="React"
+          clearable
+        />
         <div className="max-h-120 w-full overflow-y-scroll mt-10">
           <Table
             striped
