@@ -1,5 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import { Button, Table, Modal, TextInput, Select, Group } from "@mantine/core";
+import {
+  Button,
+  Table,
+  Modal,
+  TextInput,
+  Select,
+  Group,
+  Input,
+} from "@mantine/core";
 import { getUsers, deleteUser, updateUser } from "../api/api"; // You need to have updateUser API
 import SideBarLayout from "../layout/SideBarLayout";
 import { AuthContext } from "../context/AuthContext";
@@ -16,6 +24,7 @@ const Users = () => {
   const [role, setRole] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
+  const [findUser, setFindUser] = useState("");
 
   const getUsersData = async () => {
     const queryParms = new URLSearchParams();
@@ -23,6 +32,8 @@ const Users = () => {
     if (selectedRole) queryParms.append("selectedRole", selectedRole);
 
     if (selectedGender) queryParms.append("selectedGender", selectedGender);
+
+    if (findUser) queryParms.append("findUser", findUser);
 
     const response = await getUsers(queryParms);
     setUsers(response.data.allUsers);
@@ -62,7 +73,7 @@ const Users = () => {
 
   useEffect(() => {
     getUsersData();
-  }, [selectedRole , selectedGender]);
+  }, [selectedRole, selectedGender , findUser]);
 
   const rows = users.map((element) => (
     <Table.Tr key={element._id}>
@@ -110,7 +121,7 @@ const Users = () => {
     <SideBarLayout>
       <div className=" bg-gray-800 text-white py-3 px-3">All User Data</div>
       <div className="flex flex-col justify-center  ">
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <Select
             className="w-1/3 mt-5"
             label="Select User Role"
@@ -121,14 +132,17 @@ const Users = () => {
             clearable
           />
           <Select
-          className="w-1/3 mt-5"
-          label="Select Gender"
-          placeholder="Pick value"
-          data={["male" , "female"]}
-          onChange={(e) => setSelectedGender(e)}
-          defaultValue="React"
-          clearable
-        />
+            className="w-1/3 mt-5"
+            label="Select Gender"
+            placeholder="Pick value"
+            data={["male", "female"]}
+            onChange={(e) => setSelectedGender(e)}
+            defaultValue="React"
+            clearable
+          />
+          <Input.Wrapper label="Input label" className="w-1/3 mt-5">
+            <Input placeholder="Input inside Input.Wrapper"  onChange={(e) => setFindUser(e.target.value)}/>
+          </Input.Wrapper>
         </div>
         <div className="max-h-120 w-full overflow-y-scroll mt-10">
           <Table
