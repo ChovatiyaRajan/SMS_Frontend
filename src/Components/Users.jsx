@@ -15,11 +15,14 @@ const Users = () => {
   const [gender, setGender] = useState("");
   const [role, setRole] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
+  const [selectedGender, setSelectedGender] = useState("");
 
   const getUsersData = async () => {
     const queryParms = new URLSearchParams();
-    
+
     if (selectedRole) queryParms.append("selectedRole", selectedRole);
+
+    if (selectedGender) queryParms.append("selectedGender", selectedGender);
 
     const response = await getUsers(queryParms);
     setUsers(response.data.allUsers);
@@ -59,7 +62,7 @@ const Users = () => {
 
   useEffect(() => {
     getUsersData();
-  }, [selectedRole]);
+  }, [selectedRole , selectedGender]);
 
   const rows = users.map((element) => (
     <Table.Tr key={element._id}>
@@ -107,15 +110,26 @@ const Users = () => {
     <SideBarLayout>
       <div className=" bg-gray-800 text-white py-3 px-3">All User Data</div>
       <div className="flex flex-col justify-center  ">
-        <Select
+        <div className="flex gap-2">
+          <Select
+            className="w-1/3 mt-5"
+            label="Select User Role"
+            placeholder="Pick value"
+            data={["USER", "ADMIN", "SUPER_ADMIN"]}
+            onChange={(e) => setSelectedRole(e)}
+            defaultValue="React"
+            clearable
+          />
+          <Select
           className="w-1/3 mt-5"
-          label="Select User Role"
+          label="Select Gender"
           placeholder="Pick value"
-          data={["USER", "ADMIN", "SUPER_ADMIN"]}
-          onChange={(e) => setSelectedRole(e)}
+          data={["male" , "female"]}
+          onChange={(e) => setSelectedGender(e)}
           defaultValue="React"
           clearable
         />
+        </div>
         <div className="max-h-120 w-full overflow-y-scroll mt-10">
           <Table
             striped
