@@ -14,3 +14,7 @@ export const deleteUser = (id) => API.delete(`/students/del-user/${id}`);
 
 export const updateUser = (id, updatedData) =>
   API.put(`/students/update-user/${id}`, updatedData);
+
+export const addCourse = (payload) => API.post("/course/add-course", payload);
+
+export const getCourses = (payload) => API.get("/course/get-courses", payload);
