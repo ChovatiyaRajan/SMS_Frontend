@@ -8,6 +8,7 @@ import ProtectedRoutes from "./Protected Route/ProtectedRoutes.jsx";
 import "@mantine/core/styles.css";
 import Dashbored from "./pages/Dashbored.jsx";
 import Users from "./Components/Users.jsx";
+import Courses from "./Components/Courses.jsx";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
             >
               <Route path="/admin">
                 <Route path="users-data" element={<Users />}></Route>
+                <Route path="courses" element={<Courses />}></Route>
               </Route>
             </Route>
           </Routes>
