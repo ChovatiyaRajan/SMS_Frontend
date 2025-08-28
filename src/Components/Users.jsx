@@ -45,7 +45,6 @@ const Users = () => {
 
     if (dataLimit) queryParms.append("dataLimit", dataLimit);
 
-
     const response = await getUsers(queryParms);
     setUsers(response.data.allUsers);
     setTotalCount(response.data.count);
@@ -85,7 +84,7 @@ const Users = () => {
 
   useEffect(() => {
     getUsersData();
-  }, [selectedRole, selectedGender, findUser , currentPage , dataLimit]);
+  }, [selectedRole, selectedGender, findUser, currentPage, dataLimit]);
 
   const rows = users.map((element) => (
     <Table.Tr key={element._id}>
@@ -132,7 +131,9 @@ const Users = () => {
   return (
     <SideBarLayout>
       <div className=" bg-gray-800 text-white py-3 px-3">All User Data</div>
-      <div className=" bg-gray-800 text-white pb-3 px-3">ToTal Users {totalCount}</div>
+      <div className=" bg-gray-800 text-white pb-3 px-3">
+        ToTal Users {totalCount}
+      </div>
       <div className="flex flex-col justify-center  ">
         <div className="flex gap-2 items-center">
           <Select
@@ -184,7 +185,10 @@ const Users = () => {
           </Table>
         </div>
         <div className="mt-5 flex justify-between items-center">
-          <Pagination total={Math.ceil(totalCount  / dataLimit)} onChange={(e) => setCurrentPage(e)}/>
+          <Pagination
+            total={Math.ceil(totalCount / dataLimit)}
+            onChange={(e) => setCurrentPage(e)}
+          />
           <Select
             label="Set Limit"
             placeholder="Pick Limit"
