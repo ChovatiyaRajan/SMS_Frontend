@@ -9,7 +9,7 @@ import {
   Input,
   Pagination,
 } from "@mantine/core";
-import { getUsers, deleteUser, updateUser } from "../api/api"; // You need to have updateUser API
+import { getUsers, deleteUser, updateUser, getCourses } from "../api/api"; // You need to have updateUser API
 import SideBarLayout from "../layout/SideBarLayout";
 import { AuthContext } from "../context/AuthContext";
 
@@ -29,6 +29,8 @@ const Users = () => {
   const [selectedRole, setSelectedRole] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
   const [findUser, setFindUser] = useState("");
+  const [courses, setCourses] = useState([]);
+  const [userCourseID, setuserCourseID] = useState("");
 
   console.log(currentPage);
 
@@ -60,7 +62,14 @@ const Users = () => {
     }
   };
 
-  const handleEditClick = (user) => {
+  const handleEditClick = async (user) => {
+    try {
+      const courses = await getCourses();
+      setCourses(courses.data.getCourses);
+    } catch (error) {
+      console.log(error.message);
+    }
+
     setSelectedUser(user);
     setName(user.name);
     setEmail(user.email);
@@ -76,6 +85,7 @@ const Users = () => {
       email,
       gender,
       role,
+      userCourseID
     };
     await updateUser(selectedUser._id, updatedData);
     setOpened(false);
@@ -236,6 +246,19 @@ const Users = () => {
           withAsterisk
           mt="md"
         />
+        <Select
+          label="Course"
+          value={userCourseID}
+          onChange={(val) => {
+            setuserCourseID(val);
+          }}
+          data={courses.map((ele) => {
+            return { value: ele?._id, label: ele?.courseName };
+          })}
+          withAsterisk
+          mt="md"
+        />
+
         <Group mt="xl" position="right">
           <Button onClick={handleUpdateSubmit}>Update</Button>
         </Group>
