@@ -9,6 +9,7 @@ import "@mantine/core/styles.css";
 import Dashbored from "./pages/Dashbored.jsx";
 import Users from "./Components/Users.jsx";
 import Courses from "./Components/Courses.jsx";
+import AllCourses from "./pages/courses/components/AllCourses.jsx";
 
 const App = () => {
   return (
@@ -29,6 +30,10 @@ const App = () => {
               }
             >
               <Route path="/dashboard" element={<Dashbored />}></Route>
+            </Route>
+
+            <Route element={<ProtectedRoutes allowedRoles={["USER"]} />}>
+              <Route path="/find-courses" element={<AllCourses /> }></Route>
             </Route>
 
             <Route

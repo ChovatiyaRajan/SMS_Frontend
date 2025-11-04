@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
+import Dashbored from "./../pages/Dashbored";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -43,6 +44,25 @@ const Header = () => {
               </NavLink>
             )}
 
+            {auth?.user?.role === "USER" &&
+              window.location.pathname !== "/find-courses" && (
+                <NavLink
+                  to={"/find-courses"}
+                  className="bg-green-700  hover:bg-green-800 text-white px-4 py-2 rounded-md transition mr-10"
+                >
+                  Available Courses
+                </NavLink>
+              )}
+
+            {auth?.user?.role === "USER" &&
+              window.location.pathname === "/find-courses" && (
+                <NavLink
+                  to={"/dashboard"}
+                  className="bg-green-700  hover:bg-green-800 text-white px-4 py-2 rounded-md transition mr-10"
+                >
+                  Back to Dashboard
+                </NavLink>
+              )}  
             <button
               onClick={handleLogout}
               className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition"

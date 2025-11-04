@@ -23,15 +23,12 @@ const Courses = () => {
   const [selectedCourses, setSelectedCourses] = useState("");
   const [courseCode, setCourseCode] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
-  const [courseStartingDate, setCourseStartingDate] = useState([]);
-  const [courseEndingDate, setCourseEndingDate] = useState([]);
+  const [courseTimeline, setCourseTimeline] = useState([]);
   const [courseFee, setCourseFee] = useState();
   const [courseDetails, setcourseDetails] = useState([]);
   const [availableCourses, setAvailableCourses] = useState([]);
   const [courseID, setCourseId] = useState();
   const [isUpdate, setIsUpdate] = useState(false);
-
-  console.log(courseID);
 
   useEffect(() => {
     if (!opened) {
@@ -41,12 +38,7 @@ const Courses = () => {
 
   const handaleAddCourses = async () => {
     if (!selectedCourses) return alert("Please fill all the fields");
-    if (
-      courseCode === "" &&
-      courseDescription === "" &&
-      courseStartingDate === "" &&
-      courseEndingDate === ""
-    )
+    if (courseCode === "" && courseDescription === "" && courseTimeline === "")
       return alert("Please fill all the fields");
     if (courseDetails.includes(selectedCourses))
       return alert("Course already added");
@@ -55,8 +47,7 @@ const Courses = () => {
       courseName: selectedCourses,
       courseCode: courseCode,
       courseDescription: courseDescription,
-      courseStartingDate: courseStartingDate,
-      courseEndingDate: courseEndingDate,
+      courseTimeline: courseTimeline,
       courseFee: courseFee,
     };
 
@@ -71,8 +62,7 @@ const Courses = () => {
     setSelectedCourses(null);
     setCourseCode("");
     setCourseDescription("");
-    setCourseStartingDate("");
-    setCourseEndingDate("");
+    setCourseTimeline("");
     setCourseFee("");
     close();
   };
@@ -106,8 +96,7 @@ const Courses = () => {
     setSelectedCourses(ele.courseName);
     setCourseCode(ele.courseCode);
     setCourseDescription(ele.courseDescription);
-    setCourseStartingDate(ele.courseStartingDate);
-    setCourseEndingDate(ele.courseEndingDate);
+    setCourseTimeline(ele.courseTimeline);
     setCourseFee(ele.courseFee);
     setcourseDetails(ele.courseCode);
     setCourseId(ele._id);
@@ -120,8 +109,7 @@ const Courses = () => {
         courseName: selectedCourses,
         courseCode: courseCode,
         courseDescription: courseDescription,
-        courseStartingDate: courseStartingDate,
-        courseEndingDate: courseEndingDate,
+        courseTimeline: courseTimeline,
         courseFee: courseFee,
         courseId: courseID,
       };
@@ -143,8 +131,7 @@ const Courses = () => {
       <Table.Td>{element.courseName}</Table.Td>
       <Table.Td>{element.courseCode}</Table.Td>
       <Table.Td>$ {element.courseFee}</Table.Td>
-      <Table.Td>{element.courseStartingDate}</Table.Td>
-      <Table.Td>{element.courseEndingDate}</Table.Td>
+      <Table.Td>{element.courseTimeline}</Table.Td>
       <Table.Td>{element.courseDescription}</Table.Td>
       <Table.Td>
         <div className="flex gap-2">
@@ -241,22 +228,33 @@ const Courses = () => {
             />
           </Input.Wrapper>
         </div>
-        <div className="flex justify-between px-4">
+        <div className="flex justify-between">
           <div className="mt-4">
-            <p className="text-sm font-semibold mb-2">Select Starting Date</p>
-            <DatePicker
-              value={courseStartingDate}
-              onChange={setCourseStartingDate}
-              required
-            />
-          </div>
-
-          <div className="mt-4">
-            <p className="text-sm font-semibold mb-2">Select Ending Date</p>
-            <DatePicker
-              value={courseEndingDate}
-              onChange={setCourseEndingDate}
-              required
+            <Select
+              label="Select Course Timeline"
+              placeholder="Pick duration"
+              searchable
+              autoSelectOnBlur
+              value={courseTimeline}
+              onChange={(value) => setCourseTimeline(value)}
+              data={[
+                "1 Month",
+                "2 Months",
+                "3 Months",
+                "4 Months",
+                "5 Months",
+                "6 Months",
+                "7 Months",
+                "8 Months",
+                "9 Months",
+                "10 Months",
+                "11 Months",
+                "1 Year",
+                "2 Years",
+                "3 Years",
+                "4 Years",
+                "5 Years",
+              ]}
             />
           </div>
         </div>
@@ -311,8 +309,7 @@ const Courses = () => {
               <Table.Th>Corse Name</Table.Th>
               <Table.Th>Corse Code</Table.Th>
               <Table.Th>Corse Fee</Table.Th>
-              <Table.Th>Corse Starting Date</Table.Th>
-              <Table.Th>Corse Ending Date</Table.Th>
+              <Table.Th>Corse Timeline</Table.Th>
               <Table.Th>Corse Decription</Table.Th>
               <Table.Th>Action</Table.Th>
             </Table.Tr>
