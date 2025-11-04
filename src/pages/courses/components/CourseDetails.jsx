@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getCourseById } from "../../../api/api"; // you'll create this
+import { getCourseById, updateUserCourseId } from "../../../api/api"; // you'll create this
 import AppLayout from "../../../layout/AppLayout";
+import { AuthContext } from "../../../context/AuthContext";
 
 const CourseDetails = () => {
+  const { auth } = useContext(AuthContext);
   const { id } = useParams();
   const [course, setCourse] = useState(null);
   const navigate = useNavigate();
-
   useEffect(() => {
     fetchCourse();
   }, [id]);
@@ -30,6 +31,16 @@ const CourseDetails = () => {
       </AppLayout>
     );
   }
+
+  const enrollStudent = async () => {
+    try {
+      const courseID = course._id;
+      console.log("userID", auth.user._id, "courseID", courseID);
+      await updateUserCourseId(auth.user._id, courseID);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <AppLayout>
@@ -59,14 +70,14 @@ const CourseDetails = () => {
               <span className="font-semibold">Timeline:</span>{" "}
               {course.courseTimeline}
             </p>
-            <p>
-              <span className="font-semibold">Starting Date:</span>{" "}
-              {new Date(course.courseStartingDate).toLocaleDateString()}
-            </p>
-            <p>
-              <span className="font-semibold">Ending Date:</span>{" "}
-              {new Date(course.courseEndingDate).toLocaleDateString()}
-            </p>
+          </div>
+          <div className="p-2 flex justify-end">
+            <button
+              className="py-2 px-10 bg-gray-700 hover:bg-gray-800 text-white rounded-md"
+              onClick={enrollStudent}
+            >
+              Want To Learn This Course
+            </button>
           </div>
         </div>
       </div>

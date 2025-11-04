@@ -44,12 +44,6 @@ const HomePage = () => {
               <span className="font-medium">DOB:</span>{" "}
               {new Date(userDetails?.DOB).toLocaleDateString("en-GB")}
             </p>
-            <p>
-              <span className="font-medium">Role:</span>{" "}
-              <span className="uppercase text-blue-600 font-semibold">
-                {userDetails?.role}
-              </span>
-            </p>
           </div>
         </div>
 

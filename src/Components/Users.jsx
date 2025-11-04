@@ -16,6 +16,8 @@ import { AuthContext } from "../context/AuthContext";
 const Users = () => {
   const { auth } = useContext(AuthContext);
 
+  console.log(auth);
+
   const [users, setUsers] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -85,7 +87,7 @@ const Users = () => {
       email,
       gender,
       role,
-      userCourseID
+      userCourseID,
     };
     await updateUser(selectedUser._id, updatedData);
     setOpened(false);
@@ -164,9 +166,9 @@ const Users = () => {
             defaultValue="React"
             clearable
           />
-          <Input.Wrapper label="Input label" className="w-1/3 mt-5">
+          <Input.Wrapper label="Search" className="w-1/3 mt-5">
             <Input
-              placeholder="Input inside Input.Wrapper"
+              placeholder="Enter name or email to search"
               onChange={(e) => setFindUser(e.target.value)}
             />
           </Input.Wrapper>

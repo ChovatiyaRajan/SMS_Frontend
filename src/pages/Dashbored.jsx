@@ -38,9 +38,6 @@ const Dashbored = () => {
               {new Date(user.DOB).toLocaleDateString()}
             </div>
             <div>
-              <span className="font-semibold">Role:</span> {user.role}
-            </div>
-            <div>
               <span className="font-semibold">User ID:</span> {user._id}
             </div>
           </div>

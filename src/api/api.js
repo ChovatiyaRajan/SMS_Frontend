@@ -26,3 +26,6 @@ export const updateCourse = (payload) =>
   API.put("/course/update-course", payload);
 
 export const getCourseById = (id) => API.get(`/course/get-course/${id}`);
+
+export const updateUserCourseId = (userID, courseID) =>
+  API.put(`/students/course-enroll/${userID}`, { courseId: courseID });
