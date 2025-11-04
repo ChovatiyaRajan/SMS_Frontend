@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getCourses } from "../../../api/api";
 import AppLayout from "../../../layout/AppLayout";
 
 const AllCourses = () => {
   const [courses, setCourses] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getData();
@@ -18,9 +20,13 @@ const AllCourses = () => {
     }
   };
 
+  const handleCardClick = (courseId) => {
+    navigate(`/find-courses/${courseId}`);
+  };
+
   return (
     <AppLayout>
-      <div className="p-6" >
+      <div className="p-6">
         <h2 className="text-2xl font-semibold mb-6 text-gray-800">
           Available Courses
         </h2>
@@ -28,16 +34,17 @@ const AllCourses = () => {
         {courses.length === 0 ? (
           <div className="text-gray-500 text-center">No courses available</div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" >
-            {courses.map((course, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {courses.map((course) => (
               <div
-                key={index}
-                className="bg-white shadow-lg rounded-2xl p-5 border hover:shadow-xl transition-all duration-300"
+                key={course._id}
+                onClick={() => handleCardClick(course._id)}
+                className="bg-white shadow-lg rounded-2xl p-5 border hover:shadow-xl hover:cursor-pointer transition-all duration-300"
               >
                 <h3 className="text-xl font-bold text-blue-600 mb-2">
                   {course.courseName}
                 </h3>
-                <p className="text-gray-600 text-sm mb-3">
+                <p className="text-gray-600 text-sm mb-3 line-clamp-2">
                   {course.courseDescription}
                 </p>
 
@@ -51,7 +58,7 @@ const AllCourses = () => {
                     {course.courseFee}
                   </p>
                   <p>
-                    <span className="font-semibold">Start Timeline:</span>{" "}
+                    <span className="font-semibold">Timeline:</span>{" "}
                     {course.courseTimeline}
                   </p>
                 </div>

@@ -10,6 +10,8 @@ import Dashbored from "./pages/Dashbored.jsx";
 import Users from "./Components/Users.jsx";
 import Courses from "./Components/Courses.jsx";
 import AllCourses from "./pages/courses/components/AllCourses.jsx";
+import HomePage from "./pages/HomePage/HomePage.jsx";
+import CourseDetails from "./pages/courses/components/CourseDetails.jsx";
 
 const App = () => {
   return (
@@ -29,11 +31,13 @@ const App = () => {
                 />
               }
             >
+              <Route path="/home-page" element={<HomePage />}></Route>
               <Route path="/dashboard" element={<Dashbored />}></Route>
             </Route>
 
             <Route element={<ProtectedRoutes allowedRoles={["USER"]} />}>
-              <Route path="/find-courses" element={<AllCourses /> }></Route>
+              <Route path="/find-courses" element={<AllCourses />}></Route>
+              <Route path="/find-courses/:id" element={<CourseDetails />}></Route>
             </Route>
 
             <Route

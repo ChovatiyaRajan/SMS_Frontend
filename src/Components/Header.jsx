@@ -10,7 +10,7 @@ const Header = () => {
 
   const handleLogout = () => {
     const confirmLogout = window.confirm(
-      "You have been logged out successfully!"
+      "Are You Sure You Want to Logout?"
     );
 
     if (confirmLogout) {
@@ -50,19 +50,29 @@ const Header = () => {
                   to={"/find-courses"}
                   className="bg-green-700  hover:bg-green-800 text-white px-4 py-2 rounded-md transition mr-10"
                 >
-                  Available Courses
+                  Find Courses
                 </NavLink>
               )}
 
             {auth?.user?.role === "USER" &&
-              window.location.pathname === "/find-courses" && (
+              window.location.pathname !== "/dashboard" && (
                 <NavLink
                   to={"/dashboard"}
+                  className="bg-gray-900  hover:bg-gray-950 text-white px-4 py-2 rounded-full transition mr-10"
+                >
+                  Profile
+                </NavLink>
+              )}
+
+            {auth?.user?.role === "USER" &&
+              window.location.pathname !== "/home-page" && (
+                <NavLink
+                  to={"/home-page"}
                   className="bg-green-700  hover:bg-green-800 text-white px-4 py-2 rounded-md transition mr-10"
                 >
-                  Back to Dashboard
+                  Home
                 </NavLink>
-              )}  
+              )}
             <button
               onClick={handleLogout}
               className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition"

@@ -26,7 +26,7 @@ const LoginForm = () => {
       localStorage.setItem("token", token);
 
       dispatch({ type: "LOGIN", payload: response.data.user });
-      navigate("/dashboard");
+      navigate("/home-page");
     } catch (error) {
       console.log(error.message);
       alert(error.message);

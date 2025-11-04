@@ -24,3 +24,5 @@ export const removeCourse = (removeID) =>
 
 export const updateCourse = (payload) =>
   API.put("/course/update-course", payload);
+
+export const getCourseById = (id) => API.get(`/course/get-course/${id}`);
