@@ -12,6 +12,7 @@ import Courses from "./Components/Courses.jsx";
 import AllCourses from "./pages/courses/components/AllCourses.jsx";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 import CourseDetails from "./pages/courses/components/CourseDetails.jsx";
+import MyCoures from "./pages/courses/components/MyCoures.jsx";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
 
             <Route element={<ProtectedRoutes allowedRoles={["USER"]} />}>
               <Route path="/find-courses" element={<AllCourses />}></Route>
+              <Route path="/my-coures/:id" element={<MyCoures />}></Route>
               <Route path="/find-courses/:id" element={<CourseDetails />}></Route>
             </Route>
 

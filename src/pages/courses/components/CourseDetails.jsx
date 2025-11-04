@@ -3,9 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getCourseById, updateUserCourseId } from "../../../api/api"; // you'll create this
 import AppLayout from "../../../layout/AppLayout";
 import { AuthContext } from "../../../context/AuthContext";
+import { getUser } from "./../../../api/api";
 
 const CourseDetails = () => {
-  const { auth } = useContext(AuthContext);
+  const { auth, dispatch   } = useContext(AuthContext);
   const { id } = useParams();
   const [course, setCourse] = useState(null);
   const navigate = useNavigate();
@@ -35,8 +36,11 @@ const CourseDetails = () => {
   const enrollStudent = async () => {
     try {
       const courseID = course._id;
-      console.log("userID", auth.user._id, "courseID", courseID);
       await updateUserCourseId(auth.user._id, courseID);
+
+      const response = await getUser();
+      dispatch({ type: "SET_USER", payload: response.data.user });
+      console.log("userID", response, "courseID", courseID);
     } catch (error) {
       console.log(error);
     }

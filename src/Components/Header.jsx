@@ -6,7 +6,7 @@ const Header = () => {
   const navigate = useNavigate();
   const { auth } = useContext(AuthContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-// console.log(auth)
+  // console.log(auth)
   const handleLogout = () => {
     const confirmLogout = window.confirm("Are you sure you want to logout?");
     if (confirmLogout) {
@@ -27,11 +27,20 @@ const Header = () => {
   if (auth?.user?.role === "USER") {
     if (window.location.pathname !== "/home-page")
       navLinks.push({ label: "Home", to: "/home-page" });
-    if (window.location.pathname !== "/find-courses")
+    if (
+      window.location.pathname !== "/find-courses" &&
+      auth?.user?.courseId === null
+    )
       navLinks.push({ label: "Find Courses", to: "/find-courses" });
     if (window.location.pathname !== "/dashboard")
       navLinks.push({ label: "Profile", to: "/dashboard" });
-    // if()
+    if (auth?.user?.courseId) {
+      if (window.location.pathname !== `/courses/${auth.user.courseId}`)
+        navLinks.push({
+          label: "My Course",
+          to: `/my-coures/${auth.user.courseId}`,
+        });
+    }
   }
 
   return (
