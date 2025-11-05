@@ -6,7 +6,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import { getUser } from "./../../../api/api";
 
 const CourseDetails = () => {
-  const { auth, dispatch   } = useContext(AuthContext);
+  const { auth, dispatch } = useContext(AuthContext);
   const { id } = useParams();
   const [course, setCourse] = useState(null);
   const navigate = useNavigate();
@@ -41,6 +41,9 @@ const CourseDetails = () => {
       const response = await getUser();
       dispatch({ type: "SET_USER", payload: response.data.user });
       console.log("userID", response, "courseID", courseID);
+
+      navigate(`/my-coures/${courseID}`);
+      alert("Enrolled Successfully");
     } catch (error) {
       console.log(error);
     }

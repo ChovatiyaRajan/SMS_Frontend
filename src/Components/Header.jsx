@@ -34,7 +34,14 @@ const Header = () => {
       navLinks.push({ label: "Find Courses", to: "/find-courses" });
     if (window.location.pathname !== "/dashboard")
       navLinks.push({ label: "Profile", to: "/dashboard" });
-    if (auth?.user?.courseId) {
+      if (auth?.user?.courseId) {
+        if (window.location.pathname !== `/courses/${auth.user.courseId}`)
+          navLinks.push({
+            label: "My Course",
+            to: `/my-coures/${auth.user.courseId}`,
+          });
+      }
+    if (!auth?.user?.courseId) {
       if (window.location.pathname !== `/courses/${auth.user.courseId}`)
         navLinks.push({
           label: "My Course",
