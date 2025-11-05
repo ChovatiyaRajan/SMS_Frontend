@@ -1,48 +1,44 @@
 import { useContext } from "react";
 import AppLayout from "../../../layout/AppLayout";
 import { AuthContext } from "../../../context/AuthContext";
-import { endUserCourse, getUser, updateUserCourseId } from "../../../api/api";
+import { endUserCourse, getUser } from "../../../api/api";
 import { Link } from "react-router";
 
 const MyCourse = () => {
   const { auth, dispatch } = useContext(AuthContext);
-  const user = auth?.user;
+  const user = auth?.user.courseId;
 
   const course = {
-    courseId: user?.courseId,
-    courseName: user?.courseId?.courseName,
-    courseDescription: user?.courseId?.courseDescription,
-    courseCode: user?.courseId?.courseCode,
-    courseFee: user?.courseId?.courseFee,
+    courseId: auth?.user?.courseId?._id,
+    courseName: user?.courseName,
+    courseDescription: user?.courseDescription,
+    courseCode: user?.courseCode,
+    courseFee: user?.courseFee,
     courseTimeline: user?.courseTimeline,
   };
 
-  console.log(course);
   const endLearning = async () => {
-    const confirmEndCoures = window.confirm(
-      "Are you sure you want to End Course?"
+    const confirmEnd = window.confirm(
+      "Are you sure you want to end this course?"
     );
-    if (confirmEndCoures)
-      try {
-        const courseID = "";
-        console.log(auth.user._id, "Userid", courseID, "curserID");
-        await endUserCourse();
+    if (!confirmEnd) return;
+    try {
+      await endUserCourse();
 
-        const response = await getUser();
-        dispatch({ type: "SET_USER", payload: response.data.user });
-        console.log("userID", response, "courseID", courseID);
-      } catch (error) {
-        console.log(error.message);
-      }
+      const response = await getUser();
+      dispatch({ type: "SET_USER", payload: response.data.user });
+    } catch (error) {}
   };
+
   return (
     <AppLayout>
-      <div className="bg-gradient-to-b from-gray-50 to-gray-100 py-10 px-6">
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-10 px-6">
         <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-200">
           <div className="bg-blue-600 text-white py-6 px-8">
             <h1 className="text-3xl font-bold">📘 My Current Course</h1>
             <p className="text-blue-100 mt-1 text-sm">
-              Welcome back, <span className="font-semibold">{user?.name}</span>!
+              Welcome back,{" "}
+              <span className="font-semibold">{auth?.user?.name}</span>!
             </p>
           </div>
 
