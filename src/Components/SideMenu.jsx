@@ -6,7 +6,7 @@ const SideMenu = () => {
       <div className="flex flex-col justify-between w-64 h-screen bg-gray-800 text-white p-4">
         <div className="space-y-2">
           <NavLink to="/admin/users-data">
-            <h1 className="my-3 text-xl">Admin name</h1>
+            <h1 className="my-3 text-xl">Admin Name</h1>
           </NavLink>
 
           <NavLink
@@ -23,17 +23,17 @@ const SideMenu = () => {
           </NavLink>
           <NavLink
             className="block px-4 py-2 bg-gray-900 rounded-md w-full"
-            to="/admin/courses"
+            to="/admin/active-user"
           >
-            Learning Users
+            Active Students
           </NavLink>
         </div>
 
         <NavLink
           className="px-4 py-2 bg-[#ed5a5d66] rounded-md hover:bg-gray-600 text-center"
-          to="/dashboard"
+          to="/home-page"
         >
-          Return to Dashboard
+          Return to Home Page
         </NavLink>
       </div>
     </>

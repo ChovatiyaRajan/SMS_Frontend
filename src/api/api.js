@@ -31,3 +31,6 @@ export const updateUserCourseId = (userID, courseID) =>
   API.put(`/students/course-enroll/${userID}`, { courseId: courseID });
 
 export const endUserCourse = () => API.put("/students/course-end");
+
+export const getActiveUsers = (params) =>
+  API.get(`/students/acive-users?${params.toString()}`);

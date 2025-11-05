@@ -101,7 +101,6 @@ const Courses = () => {
     setcourseDetails(ele.courseCode);
     setCourseId(ele._id);
   };
-  console.log(isUpdate, "idddddddddd");
 
   const handelUpdate = async () => {
     try {

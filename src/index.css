@@ -1,5 +1,1 @@
 @import "tailwindcss";
-
-body {
-  padding-top: 64px; /* prevent content from hiding under fixed header */
-}

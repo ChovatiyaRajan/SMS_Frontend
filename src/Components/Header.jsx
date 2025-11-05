@@ -38,6 +38,13 @@ const Header = () => {
     });
   }
 
+  if (auth?.user?.role === "SUPER_ADMIN" || "ADMIN") {
+    if (window.location.pathname !== "/home-page")
+      navLinks.push({ label: "Home", to: "/home-page" });
+    if (window.location.pathname !== "/dashboard")
+      navLinks.push({ label: "Profile", to: "/dashboard" });
+  }
+
   return (
     <header className="bg-gray-800 text-white shadow-md fixed top-0 left-0 w-full z-50">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
