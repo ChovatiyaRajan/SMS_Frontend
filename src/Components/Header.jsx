@@ -38,7 +38,7 @@ const Header = () => {
     });
   }
 
-  if (auth?.user?.role === "SUPER_ADMIN" || "ADMIN") {
+  if (auth?.user?.role === "ADMIN" || "SUPER_ADMIN") {
     if (window.location.pathname !== "/home-page")
       navLinks.push({ label: "Home", to: "/home-page" });
     if (window.location.pathname !== "/dashboard")

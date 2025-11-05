@@ -16,8 +16,6 @@ import { AuthContext } from "../context/AuthContext";
 const Users = () => {
   const { auth } = useContext(AuthContext);
 
-  console.log(auth);
-
   const [users, setUsers] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,8 +31,6 @@ const Users = () => {
   const [findUser, setFindUser] = useState("");
   const [courses, setCourses] = useState([]);
   const [userCourseID, setuserCourseID] = useState("");
-
-  console.log(currentPage);
 
   const getUsersData = async () => {
     const queryParms = new URLSearchParams();

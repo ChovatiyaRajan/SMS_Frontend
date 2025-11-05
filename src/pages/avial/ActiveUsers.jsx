@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import SideBarLayout from "../../layout/SideBarLayout";
 import { getActiveUsers, getCourses } from "../../api/api";
 import { Select, Table } from "@mantine/core";
+import DateFormatter from "../../Components/DateFormatter";
 
 const ActiveUsers = () => {
   const [activeUser, setActiveUser] = useState([]);
   const [allCourses, setAllCourses] = useState([]);
   const [selectedCoures, setSelectedCoures] = useState();
+  const [selectedTimeline, setSelectedTimeline] = useState();
 
   const findActivateUsers = async () => {
     try {
@@ -14,9 +16,11 @@ const ActiveUsers = () => {
 
       if (selectedCoures) queryParms.append("selectedCoures", selectedCoures);
 
+      if (selectedTimeline)
+        queryParms.append("selectedTimeline", selectedTimeline);
+
       const response = await getActiveUsers(queryParms);
 
-      console.log(response);
       setActiveUser(response.data.activeUsers);
     } catch (error) {
       console.log(error.message);
@@ -39,13 +43,13 @@ const ActiveUsers = () => {
   useEffect(() => {
     findActivateUsers();
     getAllCourses();
-  }, [selectedCoures]);
+  }, [selectedCoures, selectedTimeline]);
 
   const rows = activeUser.map((element, index) => (
     <Table.Tr key={index}>
       <Table.Td>{element.name}</Table.Td>
       <Table.Td>{element.email}</Table.Td>
-      <Table.Td>{element.DOB}</Table.Td>
+      <Table.Td>{<DateFormatter date={element.DOB} />}</Table.Td>
       <Table.Td>{element.courseId.courseName}</Table.Td>
       <Table.Td>{element.courseId.courseTimeline}</Table.Td>
       {/* <Table.Td>
@@ -78,26 +82,34 @@ const ActiveUsers = () => {
         All Active Students
       </div>
 
-      <Select
-        className="w-1/3 mt-5"
-        label="Select Corse Name"
-        placeholder="Pick Corse Name"
-        // value={}
-        data={allCourses.map((ele, index) => ({
-          value: `${ele?.courseName}-${index}`, // unique value becouse mantain avoid duplicate value
-          label: ele?.courseName,
-        }))}
-        onChange={(val) => {
-          if (val === null) {
-            setSelectedCoures(null);
-            return;
-          }
-          const courseName = val.split("-")[0]; // for remove index from value
-          setSelectedCoures(courseName);
-        }}
-        defaultValue="React"
-        clearable
-      />
+      <div className="flex gap-x-5">
+        <Select
+          className="w-1/3 mt-5"
+          label="Select Corse Name"
+          placeholder="Pick Corse Name"
+          // value={}
+          data={allCourses.map((ele, index) => ({
+            value: ele?._id,
+            label: ele?.courseName,
+          }))}
+          onChange={(val) => setSelectedCoures(val)}
+          defaultValue="React"
+          clearable
+        />
+        <Select
+          className="w-1/3 mt-5"
+          label="Select Corse Timeline"
+          placeholder="Pick Corse Timeline"
+          // value={}
+          data={allCourses.map((ele, index) => ({
+            value: ele?.courseTimeline,
+            label: ele?.courseTimeline,
+          }))}
+          onChange={(val) => setSelectedTimeline(val)}
+          defaultValue="React"
+          clearable
+        />
+      </div>
 
       <div className="overflow-x-auto mt-4">
         <Table striped highlightOnHover withTableBorder withColumnBorders>
