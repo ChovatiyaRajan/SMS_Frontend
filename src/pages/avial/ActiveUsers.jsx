@@ -98,15 +98,15 @@ const ActiveUsers = () => {
         />
         <Select
           className="w-1/3 mt-5"
-          label="Select Corse Timeline"
-          placeholder="Pick Corse Timeline"
-          // value={}
-          data={allCourses.map((ele, index) => ({
-            value: ele?.courseTimeline,
-            label: ele?.courseTimeline,
-          }))}
+          label="Select Course Timeline"
+          placeholder="Pick Course Timeline"
+          data={[...new Set(allCourses.map((ele) => ele.courseTimeline))].map(
+            (timeline) => ({
+              value: timeline,
+              label: timeline,
+            })
+          )}
           onChange={(val) => setSelectedTimeline(val)}
-          defaultValue="React"
           clearable
         />
       </div>

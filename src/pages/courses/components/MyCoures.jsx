@@ -32,7 +32,7 @@ const MyCourse = () => {
 
   return (
     <AppLayout>
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-10 px-6">
+      <div className="bg-gradient-to-b from-gray-50 to-gray-100 py-20 px-6">
         <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-200">
           <div className="bg-blue-600 text-white py-6 px-8">
             <h1 className="text-3xl font-bold">📘 My Current Course</h1>
@@ -77,7 +77,7 @@ const MyCourse = () => {
 
                 <div className="mt-10 text-center flex gap-2">
                   <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition">
-                    Continue Learning →
+                    Start  Learning →
                   </button>
                   <button
                     className="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-xl transition"
