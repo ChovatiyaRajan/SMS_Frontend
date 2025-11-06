@@ -14,6 +14,7 @@ import HomePage from "./pages/HomePage/HomePage.jsx";
 import CourseDetails from "./pages/courses/components/CourseDetails.jsx";
 import MyCoures from "./pages/courses/components/MyCoures.jsx";
 import ActiveUsers from "./pages/avial/ActiveUsers.jsx";
+import AddLesson from "./pages/add_Lesson/AddLesson.jsx";
 
 const App = () => {
   return (
@@ -55,6 +56,7 @@ const App = () => {
                 <Route path="users-data" element={<Users />}></Route>
                 <Route path="courses" element={<Courses />}></Route>
                 <Route path="active-user" element={<ActiveUsers />}></Route>
+                <Route path="add-lesssons" element={<AddLesson />}></Route>
               </Route>
             </Route>
           </Routes>

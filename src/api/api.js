@@ -34,3 +34,12 @@ export const endUserCourse = () => API.put("/students/course-end");
 
 export const getActiveUsers = (params) =>
   API.get(`/students/acive-users?${params.toString()}`);
+
+// LESSONS API
+export const addLesson = (data) => API.post("/lessons/add-lesson", data);
+
+export const getLessonsByCourse = (courseId) =>
+  API.get(`/lessons/get-lessons/${courseId}`);
+
+export const removeLesson = (lessonId) =>
+  API.delete(`/lessons/del-lessons/${lessonId}`);

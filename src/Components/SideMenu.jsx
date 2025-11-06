@@ -27,6 +27,12 @@ const SideMenu = () => {
           >
             Active Students
           </NavLink>
+          <NavLink
+            className="block px-4 py-2 bg-gray-900 rounded-md w-full"
+            to="/admin/add-lesssons"
+          >
+            Add lessons
+          </NavLink>
         </div>
 
         <NavLink
